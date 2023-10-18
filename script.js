@@ -1,7 +1,9 @@
-let player = 0;
+let move = 0;
 let redPieces = [];
 let yelowPieces= [];
 let gameOver = 0;
+let player;
+let array;
 
 function changeColour(id) {
     let position = parseInt(id);
@@ -12,83 +14,99 @@ function changeColour(id) {
         while (redPieces.includes(position) || yelowPieces.includes(position)) {
             position -=10;
         }
-        if (player % 2 == 0) {
+        if (move % 2 == 0) {
             property = document.getElementById(position);
             property.style.backgroundColor = "#ff0000";
             redPieces.push(Number(position));
+            player = "Red";
+            array = redPieces;
         } else {
             property = document.getElementById(position);
             property.style.backgroundColor = "#f1ef01";
-            yelowPieces.push(Number(position));  
+            yelowPieces.push(Number(position)); 
+            player = "Yelow";
+            array = yelowPieces;
         }
-        ++player;
-        return (verifWiner());
+        ++move;
     }
+    return (sortArray(array));
 }
 
-function verifWiner() {
-    redPieces.sort((a, b) => a - b);
-    yelowPieces.sort((a, b) => a - b);
-    for (let i = 0; i < redPieces.length; ++i) {
-        let currentPosition = parseInt(redPieces[i]);
-        let inRow = 0;
-        while (redPieces.includes(currentPosition)) {
+function inRow(array) {
+    for (let i = 0; i < array.length; ++i) {
+        let currentPosition = parseInt(array[i]);
+        let consecutive = 0;
+        while (array.includes(currentPosition)) {
             ++currentPosition;
-            ++inRow
+            ++consecutive;
         }
-        currentPosition = parseInt(redPieces[i]);
-        let inColumn = 0;
-        while (redPieces.includes(currentPosition)) {
-            currentPosition += 10;
-            ++inColumn;
-        }
-        currentPosition = parseInt(redPieces[i]);
-        let mainDiagonal = 0;
-        while (redPieces.includes(currentPosition)) {
-            currentPosition += 11;
-            ++mainDiagonal;
-        }
-        currentPosition = parseInt(redPieces[i]);
-        let secondaryDiagonal = 0;
-        while (redPieces.includes(currentPosition)) {
-            currentPosition += 9;
-            ++secondaryDiagonal;
-        }
-        if (inRow >= 4 || inColumn >= 4 || mainDiagonal >= 4 || secondaryDiagonal >= 4) {
-            document.getElementById('mesage').innerText = "Red player WIN!";
+        if (consecutive >= 4) {
+            document.getElementById('mesage').innerText = player + " player WIN!";
             gameOver = 1;
         }
     }
-    for (let i = 0; i < yelowPieces.length; ++i) {
-        let currentPosition = parseInt(yelowPieces[i]);
-        let inRow = 0;
-        while (yelowPieces.includes(currentPosition)) {
-            ++currentPosition;
-            ++inRow
-        }
-        currentPosition = parseInt(yelowPieces[i]);
-        let inColumn = 0;
-        while (yelowPieces.includes(currentPosition)) {
+    return (gameOver);
+}
+
+function inColumn() {
+    for (let i = 0; i < array.length; ++i) {
+        let currentPosition = parseInt(array[i]);
+        let consecutive = 0;
+        while (array.includes(currentPosition)) {
             currentPosition += 10;
-            ++inColumn;
+            ++consecutive;
         }
-        currentPosition = parseInt(yelowPieces[i]);
-        let mainDiagonal = 0;
-        while (yelowPieces.includes(currentPosition)) {
-            currentPosition += 11;
-            ++mainDiagonal;
-        }
-        currentPosition = parseInt(yelowPieces[i]);
-        let secondaryDiagonal = 0;
-        while (yelowPieces.includes(currentPosition)) {
-            currentPosition += 9;
-            ++secondaryDiagonal;
-        }
-        if (inRow >= 4 || inColumn >= 4 || mainDiagonal >= 4 || secondaryDiagonal >= 4) {
-            document.getElementById('mesage').innerText = "Yelow player WIN!";
+        if (consecutive >= 4) {
+            document.getElementById('mesage').innerText = player + " player WIN!";
             gameOver = 1;
         }
     }
+    return (gameOver);
+}
+
+function mainDiagonal() {
+    for (let i = 0; i < array.length; ++i) {
+        let currentPosition = parseInt(array[i]);
+        let consecutive = 0;
+        while (array.includes(currentPosition)) {
+            currentPosition += 11;
+            ++consecutive;
+        }
+        if (consecutive >= 4) {
+            document.getElementById('mesage').innerText = player + " player WIN!";
+            gameOver = 1;
+        }
+    }
+    return (gameOver);
+}
+
+function secondaryDiagonal() {
+    for (let i = 0; i < array.length; ++i) {
+        let currentPosition = parseInt(array[i]);
+        let consecutive = 0;
+        while (array.includes(currentPosition)) {
+            currentPosition += 9;
+            ++consecutive;
+        }
+        if (consecutive >= 4) {
+            document.getElementById('mesage').innerText = player + " player WIN!";
+            gameOver = 1;
+        }
+    }
+    return (gameOver);
+}
+
+function sortArray() {
+    array.sort((a, b) => a - b);
+    return (verifyWinner(array));
+}
+
+function verifyWinner(array) {
+    inRow(array);
+    inColumn(array);
+    mainDiagonal(array);
+    secondaryDiagonal(array);
+    return (gameOver);
 }
 
  function restartGame() {
