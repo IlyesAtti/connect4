@@ -32,7 +32,7 @@ function changeColour(id) {
     return (sortArray(array));
 }
 
-function inRow(array) {
+function checkRow(array) {
     for (let i = 0; i < array.length; ++i) {
         let currentPosition = parseInt(array[i]);
         let consecutive = 0;
@@ -41,14 +41,12 @@ function inRow(array) {
             ++consecutive;
         }
         if (consecutive >= 4) {
-            document.getElementById('mesage').innerText = player + " player WIN!";
-            gameOver = 1;
+            printRezult();
         }
     }
-    return (gameOver);
 }
 
-function inColumn() {
+function checkColumn() {
     for (let i = 0; i < array.length; ++i) {
         let currentPosition = parseInt(array[i]);
         let consecutive = 0;
@@ -57,14 +55,12 @@ function inColumn() {
             ++consecutive;
         }
         if (consecutive >= 4) {
-            document.getElementById('mesage').innerText = player + " player WIN!";
-            gameOver = 1;
+            printRezult();
         }
     }
-    return (gameOver);
 }
 
-function mainDiagonal() {
+function checkDagonal() {
     for (let i = 0; i < array.length; ++i) {
         let currentPosition = parseInt(array[i]);
         let consecutive = 0;
@@ -73,14 +69,12 @@ function mainDiagonal() {
             ++consecutive;
         }
         if (consecutive >= 4) {
-            document.getElementById('mesage').innerText = player + " player WIN!";
-            gameOver = 1;
+            printRezult();
         }
     }
-    return (gameOver);
 }
 
-function secondaryDiagonal() {
+function checkSecondaryDiagonal() {
     for (let i = 0; i < array.length; ++i) {
         let currentPosition = parseInt(array[i]);
         let consecutive = 0;
@@ -89,11 +83,9 @@ function secondaryDiagonal() {
             ++consecutive;
         }
         if (consecutive >= 4) {
-            document.getElementById('mesage').innerText = player + " player WIN!";
-            gameOver = 1;
+            printRezult();      
         }
     }
-    return (gameOver);
 }
 
 function sortArray() {
@@ -102,11 +94,15 @@ function sortArray() {
 }
 
 function verifyWinner(array) {
-    inRow(array);
-    inColumn(array);
-    mainDiagonal(array);
-    secondaryDiagonal(array);
-    return (gameOver);
+    checkRow(array);
+    checkColumn(array);
+    checkDagonal(array);
+    checkSecondaryDiagonal(array);
+}
+
+function printRezult() {
+    document.getElementById('mesage').innerText = player + " player WIN!";
+    gameOver = 1;
 }
 
  function restartGame() {
