@@ -41,7 +41,7 @@ function checkRow(array) {
             ++consecutive;
         }
         if (consecutive >= 4) {
-            printRezult();
+            printResult();
         }
     }
 }
@@ -55,7 +55,7 @@ function checkColumn() {
             ++consecutive;
         }
         if (consecutive >= 4) {
-            printRezult();
+            printResult();
         }
     }
 }
@@ -69,7 +69,7 @@ function checkDagonal() {
             ++consecutive;
         }
         if (consecutive >= 4) {
-            printRezult();
+            printResult();
         }
     }
 }
@@ -83,7 +83,7 @@ function checkSecondaryDiagonal() {
             ++consecutive;
         }
         if (consecutive >= 4) {
-            printRezult();      
+            printResult();      
         }
     }
 }
@@ -100,7 +100,7 @@ function verifyWinner(array) {
     checkSecondaryDiagonal(array);
 }
 
-function printRezult() {
+function printResult() {
     document.getElementById('mesage').innerText = player + " player WIN!";
     gameOver = 1;
 }
